@@ -12,7 +12,7 @@ steps:
     args: ["push", "gcr.io/${PROJECT_ID}/deploy/cloudrun-example"]
 
   - name: "gcr.io/cloud-builders/gcloud"
-    args: ["beta", "run", "deploy", "cloudrun-example", "--image", "gcr.io/${PROJECT_ID}/deploy/cloudrun-example", "--platform", "managed", "--region", "${_DEFAULT_REGION}"]
+    args: ["beta", "run", "deploy", "cloudrun-example", "--image", "gcr.io/${PROJECT_ID}/deploy/cloudrun-example", "--platform", "managed", "--region", "${_DEFAULT_REGION}", "--impersonate-service-account", "${_TF_SA_EMAIL}"]
 
 images:
   - "gcr.io/$PROJECT_ID/deploy/cloudrun-example"
