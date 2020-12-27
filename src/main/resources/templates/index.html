@@ -184,9 +184,8 @@
 
 		<div class="details">
             <p>This created the revision <span class="code" th:text="${revision}" /> of the </br>
-            Cloud Run service <span class="code" th:text="${service}" /></br>
-            <span th:text="${project} ? ' in the GCP project'" />
-        <span class="code" th:if="${project}" th:text="${project}" />.</p>
+            Cloud Run service <span class="code" th:text="${service}" /><span th:text="${project} ? ' in the</br>
+            GCP project'" /><span class="code" th:if="${project}" th:text="${project}" />.</p>
 
 			<p class="callout">
 				<label>
