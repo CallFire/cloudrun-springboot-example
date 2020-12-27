@@ -14,11 +14,12 @@ steps:
   - name: "gcr.io/cloud-builders/docker"
     args: ["push", "gcr.io/${PROJECT_ID}/deploy/cloudrun-example"]
 
-  - name: "gcr.io/cloud-builders/gcloud"
-    args: ["beta", "run", "deploy", "cloudrun-example", "--image", "gcr.io/${PROJECT_ID}/deploy/cloudrun-example", "--platform", "managed", "--region", "${_DEFAULT_REGION}"]
-
+  # Uses <project_id>@cloudbuild...
   # - name: "gcr.io/cloud-builders/gcloud"
-  #   args: ["beta", "run", "deploy", "cloudrun-example", "--image", "gcr.io/${PROJECT_ID}/deploy/cloudrun-example", "--platform", "managed", "--region", "${_DEFAULT_REGION}", "--impersonate-service-account", "project-service-account@prj-sre-d-sandbox-run-c366.iam.gserviceaccount.com"]
+  #   args: ["beta", "run", "deploy", "cloudrun-example", "--image", "gcr.io/${PROJECT_ID}/deploy/cloudrun-example", "--platform", "managed", "--region", "${_DEFAULT_REGION}"]
+
+  - name: "gcr.io/cloud-builders/gcloud"
+    args: ["beta", "run", "deploy", "cloudrun-example", "--image", "gcr.io/${PROJECT_ID}/deploy/cloudrun-example", "--platform", "managed", "--region", "${_DEFAULT_REGION}", "--impersonate-service-account", "project-service-account@prj-sre-d-sandbox-run-c366.iam.gserviceaccount.com"]
 
 images:
   - "gcr.io/$PROJECT_ID/deploy/cloudrun-example"
