@@ -9,4 +9,3 @@ gcp-iam-cloudbuild:
 
 gcp-iam-project-service-account:
 	gcloud projects get-iam-policy prj-sre-d-sandbox-run-c366 --flatten="bindings[].members" --format='table(bindings.role)' --filter="bindings.members:project-service-account"
-
