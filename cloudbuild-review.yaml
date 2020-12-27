@@ -1,18 +1,19 @@
 timeout: 7200s
+# https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values
 substitutions:
   _POLICY_REPO: '' # add path to policies here https://github.com/forseti-security/policy-library/blob/master/docs/user_guide.md#how-to-use-terraform-validator
 steps:
-  - name: "gcr.io/cloud-builders/gcloud"
-    args: ["config", "set", "auth/impersonate_service_account", "${_TF_SA_EMAIL}"]
+  # - name: "gcr.io/cloud-builders/gcloud"
+  #   args: ["config", "set", "auth/impersonate_service_account", "${_TF_SA_EMAIL}"]
 
   - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io/${PROJECT_ID}/review/cloudrun-example", "."]
+    args: ["build", "-t", "gcr.io/${PROJECT_ID}/cloudrun-example:${SHORT_SHA}", "."]
 
   - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "gcr.io/${PROJECT_ID}/review/cloudrun-example"]
+    args: ["push", "gcr.io/${PROJECT_ID}/cloudrun-example:${SHORT_SHA}"]
 
   # - name: "gcr.io/cloud-builders/gcloud"
   #   args: ["beta", "run", "deploy", "cloudrun-example", "--image", "gcr.io/${PROJECT_ID}/cloudrun-example", "--platform", "managed", "--region", "${_DEFAULT_REGION}"]
 
 images:
-  - "gcr.io/$PROJECT_ID/review/cloudrun-example"
+  - "gcr.io/${PROJECT_ID}/cloudrun-example:${SHORT_SHA}"
