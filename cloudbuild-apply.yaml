@@ -1,10 +1,8 @@
 timeout: 7200s
+# https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values
 substitutions:
   _POLICY_REPO: '' # add path to policies here https://github.com/forseti-security/policy-library/blob/master/docs/user_guide.md#how-to-use-terraform-validator
 steps:
-  # - name: "gcr.io/cloud-builders/gcloud"
-  #   args: ["config", "set", "auth/impersonate_service_account", "${_TF_SA_EMAIL}"]
-
   # - name: "gcr.io/cloud-builders/gcloud"
   #   args: ["auth", "list"]
 
@@ -17,9 +15,6 @@ steps:
   # Uses 195303305359@cloudbuild.gserviceaccount.com
   - name: "gcr.io/cloud-builders/gcloud"
     args: ["beta", "run", "deploy", "my-springboot-service", "--image", "gcr.io/${PROJECT_ID}/cloudrun-example:latest", "--platform", "managed", "--region", "${_DEFAULT_REGION}"]
-
-  # - name: "gcr.io/cloud-builders/gcloud"
-  #   args: ["beta", "run", "deploy", "my-springboot-service", "--image", "gcr.io/${PROJECT_ID}/deploy/cloudrun-example", "--platform", "managed", "--region", "${_DEFAULT_REGION}", "--impersonate-service-account", "project-service-account@prj-sre-d-sandbox-run-c366.iam.gserviceaccount.com"]
 
 # images:
 #   - "gcr.io/$PROJECT_ID/deploy/cloudrun-example"
