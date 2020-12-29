@@ -36,7 +36,7 @@ steps:
       - "-c"
       - |
         set -ex
-        gcloud run deploy ${_ENVIRONMENT}-${REPO_NAME} \
+        gcloud run deploy ${REPO_NAME}-${BRANCH_NAME} \
           --image gcr.io/${PROJECT_ID}/${REPO_NAME}:dev-${SHORT_SHA} \
           --region ${_DEFAULT_REGION} \
           --platform managed \

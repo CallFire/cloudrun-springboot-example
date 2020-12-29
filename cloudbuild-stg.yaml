@@ -15,8 +15,21 @@ steps:
   #   args: ["push", "gcr.io/${PROJECT_ID}/cloudrun-example"]
 
   # Uses 195303305359@cloudbuild.gserviceaccount.com
-  - name: "gcr.io/cloud-builders/gcloud"
-    args: ["beta", "run", "deploy", "my-springboot-service", "--image", "gcr.io/${PROJECT_ID}/cloudrun-example:latest", "--platform", "managed", "--region", "${_DEFAULT_REGION}"]
+  # - name: "gcr.io/cloud-builders/gcloud"
+  #   args: ["beta", "run", "deploy", "my-springboot-service", "--image", "gcr.io/${PROJECT_ID}/cloudrun-example:latest", "--platform", "managed", "--region", "${_DEFAULT_REGION}"]
+
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: /bin/sh
+    args:
+      - "-c"
+      - |
+        set -ex
+        gcloud run deploy ${REPO_NAME}-${_ENVIRONMENT} \
+          --image gcr.io/${PROJECT_ID}/${REPO_NAME}:dev-${SHORT_SHA} \
+          --region ${_DEFAULT_REGION} \
+          --platform managed \
+          --allow-unauthenticated
+          #--vpc-connector ${_CONNECTOR_NAME} \
 
 # images:
 #   - "gcr.io/$PROJECT_ID/deploy/cloudrun-example"
