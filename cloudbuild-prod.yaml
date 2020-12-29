@@ -5,14 +5,14 @@ substitutions:
   _POLICY_REPO: '' # add path to policies here https://github.com/forseti-security/policy-library/blob/master/docs/user_guide.md#how-to-use-terraform-validator
 
 steps:
-  - name: "gcr.io/cloud-builders/docker"
-    entrypoint: /bin/bash
-    args:
-      - "-c"
-      - |
-        set -ex
-        docker build -t "${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:dev-${SHORT_SHA}" .
-        docker push "${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:dev-${SHORT_SHA}"
+  # - name: "gcr.io/cloud-builders/docker"
+  #   entrypoint: /bin/bash
+  #   args:
+  #     - "-c"
+  #     - |
+  #       set -ex
+  #       docker build -t "${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:release-${SHORT_SHA}" .
+  #       docker push "${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:release-${SHORT_SHA}"
 
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: /bin/sh
@@ -20,13 +20,38 @@ steps:
       - "-c"
       - |
         set -ex
-        gcloud run deploy ${REPO_NAME}-${_ENVIRONMENT} \
-          --image ${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:dev-${SHORT_SHA} \
+        gcloud container images add-tag \
+          ${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:stage-${SHORT_SHA} \
+          ${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:${TAG_NAME} \
+
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: /bin/sh
+    args:
+      - "-c"
+      - |
+        set -ex
+        gcloud --project ${_PRD_PROJECT} \
+          run deploy ${REPO_NAME} \
+          --image ${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:${TAG_NAME} \
+          --region ${_DEFAULT_REGION} \
+          --platform managed \
+          --no-traffic \
+          --allow-unauthenticated
+
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: /bin/sh
+    args:
+      - "-c"
+      - |
+        set -ex
+        gcloud project ${_PRD_PROJECT} \
+          run services update-traffic ${REPO_NAME} \
           --region ${_DEFAULT_REGION} \
           --platform managed \
           --allow-unauthenticated
+          --to-revision LATEST=${_TRAFFIC_PERCENTAGE}
           #--vpc-connector ${_CONNECTOR_NAME} \
-          # --image ${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:dev-${SHORT_SHA} \
+          # --image ${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:${TAG_NAME} \
 
 # images:
 #   - "gcr.io/$PROJECT_ID/deploy/cloudrun-example"
