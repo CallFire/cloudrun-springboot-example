@@ -63,3 +63,7 @@ Configuration for this service uses environment variables.
 
 * Read the Cloud Run documentation on [developing your service](https://cloud.google.com/run/docs/developing).
 * Follow the [System packages tutorial](https://cloud.google.com/run/docs/tutorials/system-packages) to learn how to use the command-line to build and deploy a more complicated service.
+
+## Workflow
+
+* To skip CI while updating docs include '[skip ci]' or '[ci skip]' in your commit message

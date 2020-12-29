@@ -11,8 +11,8 @@ steps:
       - "-c"
       - |
         set -ex
-        docker build -t "${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:dev-${SHORT_SHA}" .
-        docker push "${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:dev-${SHORT_SHA}"
+        docker build -t "${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:release-${SHORT_SHA}" .
+        docker push "${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:release-${SHORT_SHA}"
 
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: /bin/sh
@@ -21,12 +21,13 @@ steps:
       - |
         set -ex
         gcloud run deploy ${REPO_NAME}-${_ENVIRONMENT} \
-          --image ${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:dev-${SHORT_SHA} \
+          --project ${_STG_PROJECT} \
+          --image ${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:release-${SHORT_SHA} \
           --region ${_DEFAULT_REGION} \
           --platform managed \
           --allow-unauthenticated
           #--vpc-connector ${_CONNECTOR_NAME} \
-          # --image ${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:dev-${SHORT_SHA} \
+          # --image ${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:release-${SHORT_SHA} \
 
 # images:
 #   - "gcr.io/$PROJECT_ID/deploy/cloudrun-example"
