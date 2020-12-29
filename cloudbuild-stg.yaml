@@ -25,11 +25,12 @@ steps:
       - |
         set -ex
         gcloud run deploy ${REPO_NAME}-${_ENVIRONMENT} \
-          --image gcr.io/${PROJECT_ID}/${REPO_NAME}:dev-${SHORT_SHA} \
+          --image ${_DEFAULT_REGION}-docker.pkg.dev/${PROJECT_ID}/container-repository/${REPO_NAME}:latest \
           --region ${_DEFAULT_REGION} \
           --platform managed \
           --allow-unauthenticated
           #--vpc-connector ${_CONNECTOR_NAME} \
+          # --image ${_DEFAULT_REGION}-docker.pkg.dev/${PROJECT_ID}/container-repository/${REPO_NAME}:dev-${SHORT_SHA} \
 
 # images:
 #   - "gcr.io/$PROJECT_ID/deploy/cloudrun-example"
