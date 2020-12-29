@@ -39,7 +39,6 @@ steps:
       - |
         set -ex
         gcloud run deploy ${REPO_NAME}-${BRANCH_NAME} \
-          # --image gcr.io/${PROJECT_ID}/${REPO_NAME}:dev-${SHORT_SHA} \
           --image ${_DEFAULT_REGION}-docker.pkg.dev/${PROJECT_ID}/container-repository/${REPO_NAME}:dev-${SHORT_SHA} \
           --region ${_DEFAULT_REGION} \
           --platform managed \
@@ -47,7 +46,8 @@ steps:
           #--vpc-connector ${_CONNECTOR_NAME} \
 
 # us-central1-docker.pkg.dev/prj-sre-d-sandbox-run-c366/container-repository
-
+# docker pull \
+#    us-central1-docker.pkg.dev/prj-sre-d-sandbox-run-c366/container-repository/cloudrun-example:dev-14eaa66
 # images:
 #   - "gcr.io/${PROJECT_ID}/cloudrun-example:${SHORT_SHA}"
 #   - "gcr.io/${PROJECT_ID}/cloudrun-example:latest"
