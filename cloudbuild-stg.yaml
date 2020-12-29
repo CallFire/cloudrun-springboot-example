@@ -20,8 +20,8 @@ steps:
       - "-c"
       - |
         set -ex
-        gcloud run deploy ${REPO_NAME}-${_ENVIRONMENT} \
-          --project ${_STG_PROJECT} \
+        gcloud --project ${_STG_PROJECT_ID} \
+          run deploy ${REPO_NAME}-${_ENVIRONMENT} \
           --image ${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:stage-${SHORT_SHA} \
           --region ${_DEFAULT_REGION} \
           --platform managed \
