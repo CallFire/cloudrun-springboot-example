@@ -25,7 +25,7 @@ steps:
       - |
         set -ex
         gcloud run deploy ${REPO_NAME}-${_ENVIRONMENT} \
-          --image ${_DEFAULT_REGION}-docker.pkg.dev/${PROJECT_ID}/container-repository/${REPO_NAME}:latest \
+          --image ${_DEFAULT_REGION}-docker.pkg.dev/${PROJECT_ID}/container-repository/${REPO_NAME}:dev-${SHORT_SHA} \
           --region ${_DEFAULT_REGION} \
           --platform managed \
           --allow-unauthenticated
