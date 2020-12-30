@@ -1,8 +1,6 @@
-timeout: 7200s
-
-# https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values
-substitutions:
-  _POLICY_REPO: '' # add path to policies here https://github.com/forseti-security/policy-library/blob/master/docs/user_guide.md#how-to-use-terraform-validator
+#
+# Requires that you already have a version running in production.
+#
 
 steps:
   # - name: "gcr.io/cloud-builders/docker"
@@ -54,3 +52,10 @@ steps:
 
 # images:
 #   - "gcr.io/$PROJECT_ID/deploy/cloudrun-example"
+
+# https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values
+substitutions:
+  _POLICY_REPO: '' # add path to policies here https://github.com/forseti-security/policy-library/blob/master/docs/user_guide.md#how-to-use-terraform-validator
+
+# Cloud Build Timeout
+timeout: 3600s
