@@ -48,8 +48,7 @@ steps:
           run services update-traffic ${REPO_NAME} \
           --region ${_DEFAULT_REGION} \
           --platform managed \
-          --allow-unauthenticated
-          --to-revision LATEST=${_TRAFFIC_PERCENTAGE}
+          --to-revisions LATEST=${_TRAFFIC_PERCENTAGE}
           #--vpc-connector ${_CONNECTOR_NAME} \
           # --image ${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:${TAG_NAME} \
 
