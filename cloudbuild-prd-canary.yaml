@@ -44,7 +44,7 @@ steps:
       - "-c"
       - |
         set -ex
-        gcloud --project ${_PRD_PROJECT} \
+        gcloud --project ${_PRD_PROJECT_ID} \
           run services update-traffic ${REPO_NAME} \
           --region ${_DEFAULT_REGION} \
           --platform managed \
