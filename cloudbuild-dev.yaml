@@ -1,26 +1,8 @@
-timeout: 7200s
-
-# https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values
-substitutions:
-  _POLICY_REPO: '' # add path to policies here https://github.com/forseti-security/policy-library/blob/master/docs/user_guide.md#how-to-use-terraform-validator
-  _ENVIRONMENT: 'development'
-
 steps:
-  # - name: "gcr.io/cloud-builders/docker"
-  #   args: ["build", "-t", "gcr.io/${PROJECT_ID}/cloudrun-example:${SHORT_SHA}", "-t", "gcr.io/${PROJECT_ID}/cloudrun-example:latest", "."]
-
-  # - name: "gcr.io/cloud-builders/docker"
-  #   args: ["push", "gcr.io/${PROJECT_ID}/cloudrun-example:${SHORT_SHA}"]
-
-  # - name: "gcr.io/cloud-builders/docker"
-  #   entrypoint: /bin/bash
-  #   args:
-  #   - "-c"
-  #   - |
-  #     set -ex
-  #     docker build -t "gcr.io/${PROJECT_ID}/cloudrun-example:${SHORT_SHA}" -t "gcr.io/${PROJECT_ID}/cloudrun-example:latest" .
-  #     docker push "gcr.io/${PROJECT_ID}/cloudrun-example"
-
+  # Use artifact registry over container registry so we can keep it private and
+  # shared across projects/environments. Container registry only allows private
+  # single project use in the form similar to
+  # gcr.io/${PROJECT_ID}/${REPO_NAME}:dev-${SHORT_SHA}
   - name: "gcr.io/cloud-builders/docker"
     entrypoint: /bin/bash
     args:
@@ -29,8 +11,6 @@ steps:
         set -ex
         docker build -t "${_DEFAULT_REGION}-docker.pkg.dev/${PROJECT_ID}/container-repository/${REPO_NAME}:dev-${SHORT_SHA}" .
         docker push "${_DEFAULT_REGION}-docker.pkg.dev/${PROJECT_ID}/container-repository/${REPO_NAME}:dev-${SHORT_SHA}"
-        # docker build -t "gcr.io/${PROJECT_ID}/${REPO_NAME}:dev-${SHORT_SHA}" .
-        # docker push "gcr.io/${PROJECT_ID}/${REPO_NAME}:dev-${SHORT_SHA}"
 
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: /bin/sh
@@ -44,10 +24,18 @@ steps:
           --platform managed \
           --allow-unauthenticated
           #--vpc-connector ${_CONNECTOR_NAME} \
+          #--set-env-vars CONNECTION_TYPE=ip \
 
-# us-central1-docker.pkg.dev/prj-sre-d-sandbox-run-c366/container-repository
-# docker pull \
-#    us-central1-docker.pkg.dev/prj-sre-d-sandbox-run-c366/container-repository/cloudrun-example:dev-14eaa66
+# We already pushed the image in the first step as we need it to use it in the following deploy step
 # images:
-#   - "gcr.io/${PROJECT_ID}/cloudrun-example:${SHORT_SHA}"
-#   - "gcr.io/${PROJECT_ID}/cloudrun-example:latest"
+#   - "${_DEFAULT_REGION}-docker.pkg.dev/${PROJECT_ID}/container-repository/${REPO_NAME}:dev-${SHORT_SHA}"
+
+# Some variables are already pushed via our build trigger along with ones that
+# come from cloud build. This is only a means to override or provide additional
+# local scope variables.
+# https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values
+substitutions:
+  _POLICY_REPO: '' # add path to policies here https://github.com/forseti-security/policy-library/blob/master/docs/user_guide.md#how-to-use-terraform-validator
+
+# Cloud Build Timeout
+timeout: 3600s
