@@ -1,3 +1,7 @@
+#
+# Requires that you already have a version running in production.
+#
+
 steps:
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: /bin/sh

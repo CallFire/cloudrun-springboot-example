@@ -30,5 +30,9 @@ substitutions:
   _POLICY_REPO: '' # add path to policies here https://github.com/forseti-security/policy-library/blob/master/docs/user_guide.md#how-to-use-terraform-validator
   _ENVIRONMENT: 'stage'
 
+# https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values
+substitutions:
+  _POLICY_REPO: '' # add path to policies here https://github.com/forseti-security/policy-library/blob/master/docs/user_guide.md#how-to-use-terraform-validator
+
 # Cloud Build Timeout
 timeout: 3600s
