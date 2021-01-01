@@ -1,13 +1,4 @@
 steps:
-  # - name: "gcr.io/cloud-builders/docker"
-  #   entrypoint: /bin/bash
-  #   args:
-  #     - "-c"
-  #     - |
-  #       set -ex
-  #       docker build -t "${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:release-${SHORT_SHA}" .
-  #       docker push "${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:release-${SHORT_SHA}"
-
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: /bin/sh
     args:
@@ -32,9 +23,6 @@ steps:
           --allow-unauthenticated
           #--vpc-connector ${_CONNECTOR_NAME} \
           # --image ${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:${TAG_NAME} \
-
-# images:
-#   - "gcr.io/$PROJECT_ID/deploy/cloudrun-example"
 
 # https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values
 substitutions:
