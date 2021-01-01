@@ -23,3 +23,7 @@ COPY --from=build-env /app/target/hello-world-*.jar /hello-world.jar
 
 # Run the web service on container startup.
 CMD ["java", "-jar", "/hello-world.jar"]
+
+# Research
+# * https://dzone.com/articles/how-to-make-docker-build-run-faster
+#   - Not an issue for us: Sending build context to Docker daemon    512kB
