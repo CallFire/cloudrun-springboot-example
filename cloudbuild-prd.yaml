@@ -1,3 +1,7 @@
+#
+# Deploys our tagged release with 100% traffic if canary release went well.
+#
+
 steps:
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: /bin/sh

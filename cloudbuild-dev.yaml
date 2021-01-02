@@ -1,8 +1,11 @@
+#
+# Use artifact registry over container registry so we can keep it private and
+# shared across projects/environments. Container registry only allows private
+# single project use in the form similar to
+# gcr.io/${PROJECT_ID}/${REPO_NAME}:dev-${SHORT_SHA}
+#
+
 steps:
-  # Use artifact registry over container registry so we can keep it private and
-  # shared across projects/environments. Container registry only allows private
-  # single project use in the form similar to
-  # gcr.io/${PROJECT_ID}/${REPO_NAME}:dev-${SHORT_SHA}
   - name: "gcr.io/cloud-builders/docker"
     entrypoint: /bin/bash
     args:
@@ -30,9 +33,9 @@ steps:
 # images:
 #   - "${_DEFAULT_REGION}-docker.pkg.dev/${PROJECT_ID}/container-repository/${REPO_NAME}:dev-${SHORT_SHA}"
 
-# Some variables are already pushed via our build trigger along with ones that
-# come from cloud build. This is only a means to override or provide additional
-# local scope variables.
+# Variables defined here will not override the ones supplied by our build
+# trigger. These variables are considered defaults if the value from our
+# build trigger is empty or does not exist.
 # https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values
 substitutions:
   _POLICY_REPO: '' # add path to policies here https://github.com/forseti-security/policy-library/blob/master/docs/user_guide.md#how-to-use-terraform-validator

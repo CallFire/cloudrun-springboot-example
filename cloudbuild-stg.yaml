@@ -1,3 +1,9 @@
+#
+# This workflow will perform the final docker build and will be the build asset
+# we use to promote to production. Here we can perform final docker scans for
+# security precautions and serves as our final gatekeeper.
+#
+
 steps:
   - name: "gcr.io/cloud-builders/docker"
     entrypoint: /bin/bash
@@ -22,10 +28,6 @@ steps:
           --allow-unauthenticated
           #--vpc-connector ${_CONNECTOR_NAME} \
           #--set-env-vars CONNECTION_TYPE=ip \
-
-# https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values
-substitutions:
-  _POLICY_REPO: '' # add path to policies here https://github.com/forseti-security/policy-library/blob/master/docs/user_guide.md#how-to-use-terraform-validator
 
 # https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values
 substitutions:

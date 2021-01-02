@@ -1,6 +1,6 @@
 # Cloud Run Hello World with Cloud Code
 
-This "Hello World" is a [Cloud Run](https://cloud.google.com/run/docs) service that renders a webpage.
+This "Hello World" is a [Cloud Run](https://cloud.google.com/run/docs) service that renders a webpage. The example here renders a little more than what you would use for a vanilla quickstart. Feel free to use the reference [quickstart here](https://cloud.google.com/run/docs/quickstarts/build-and-deploy#java).
 
 ----
 
@@ -64,6 +64,18 @@ Configuration for this service uses environment variables.
 * Read the Cloud Run documentation on [developing your service](https://cloud.google.com/run/docs/developing).
 * Follow the [System packages tutorial](https://cloud.google.com/run/docs/tutorials/system-packages) to learn how to use the command-line to build and deploy a more complicated service.
 
+## Optimization
+
+* https://cloud.google.com/run/docs/tips/general#run_tips_global_scope-java
+* https://cloud.google.com/run/docs/tips/java
+
 ## Workflow
 
 * To skip CI while updating docs include '[skip ci]' or '[ci skip]' in your commit message
+* Feature branches either in shared or forked repos can only use alphanumeric and dashes
+
+## Known Issues
+
+* Java/Maven projects fail at times due to connection timeouts from external maven repos
+  - Rerun failed build or cache maven packages in artifact registry to improve this scenario
+  - We should not have to setup authentication for Maven/Gradle as we are using Cloud Build, but just in case (https://cloud.google.com/artifact-registry/docs/java/authentication)

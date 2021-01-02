@@ -1,5 +1,7 @@
 #
-# Requires that you already have a version running in production.
+# Requires that you already have a version running in production. Based on the
+# _TRAFFIC_PERCENTAGE value defined in our build trigger, we will perform a
+# canary release to that percentage of traffic to the service.
 #
 
 steps:
