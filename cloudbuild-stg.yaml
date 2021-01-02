@@ -1,3 +1,9 @@
+#
+# This workflow will perform the final docker build and will be the build asset
+# we use to promote to production. Here we can perform final docker scans for
+# security precautions and serves as our final gatekeeper.
+#
+
 steps:
   - name: "gcr.io/cloud-builders/docker"
     entrypoint: /bin/bash
@@ -15,7 +21,7 @@ steps:
       - |
         set -ex
         gcloud --project ${_STG_PROJECT_ID} \
-          run deploy ${_ENVIRONMENT}-${REPO_NAME} \
+          run deploy stage-${REPO_NAME} \
           --image ${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:stage-${SHORT_SHA} \
           --region ${_DEFAULT_REGION} \
           --platform managed \
@@ -25,11 +31,6 @@ steps:
 
 # Override _ENVIRONMENT as that value is taken from our terraform substitution
 # with value 'non-production'.
-# https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values
-substitutions:
-  _POLICY_REPO: '' # add path to policies here https://github.com/forseti-security/policy-library/blob/master/docs/user_guide.md#how-to-use-terraform-validator
-  _ENVIRONMENT: 'stage'
-
 # https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values
 substitutions:
   _POLICY_REPO: '' # add path to policies here https://github.com/forseti-security/policy-library/blob/master/docs/user_guide.md#how-to-use-terraform-validator
