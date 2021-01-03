@@ -25,8 +25,8 @@ steps:
           --image ${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:stage-${SHORT_SHA} \
           --region ${_DEFAULT_REGION} \
           --platform managed \
-          --allow-unauthenticated
-          #--vpc-connector ${_CONNECTOR_NAME} \
+          --allow-unauthenticated \
+          --vpc-connector ${_CONNECTOR_NAME} \
           #--set-env-vars CONNECTION_TYPE=ip \
 
 # https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values

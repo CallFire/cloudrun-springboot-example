@@ -22,7 +22,7 @@ FROM adoptopenjdk/openjdk8:alpine-slim
 COPY --from=build-env /app/target/hello-world-*.jar /hello-world.jar
 
 # Run the web service on container startup.
-CMD ["java", "-jar", "/hello-world.jar"]
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/hello-world.jar"]
 
 # Research
 # * https://dzone.com/articles/how-to-make-docker-build-run-faster
