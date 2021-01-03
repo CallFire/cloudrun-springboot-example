@@ -24,7 +24,7 @@ steps:
           --image ${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:${TAG_NAME} \
           --region ${_DEFAULT_REGION} \
           --platform managed \
-          --allow-unauthenticated
+          --allow-unauthenticated \
           --vpc-connector ${_CONNECTOR_NAME} \
           # --image ${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:${TAG_NAME} \
 
