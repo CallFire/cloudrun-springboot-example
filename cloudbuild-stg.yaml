@@ -26,7 +26,7 @@ steps:
           --region ${_DEFAULT_REGION} \
           --platform managed \
           --allow-unauthenticated
-          #--vpc-connector ${_CONNECTOR_NAME} \
+          --vpc-connector ${_CONNECTOR_NAME} \
           #--set-env-vars CONNECTION_TYPE=ip \
 
 # https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values

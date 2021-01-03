@@ -26,7 +26,7 @@ steps:
           --region ${_DEFAULT_REGION} \
           --platform managed \
           --allow-unauthenticated
-          #--vpc-connector ${_CONNECTOR_NAME} \
+          --vpc-connector ${_CONNECTOR_NAME} \
           #--set-env-vars CONNECTION_TYPE=ip \
 
 # We already pushed the image in the first step as we need it to use it in the following deploy step

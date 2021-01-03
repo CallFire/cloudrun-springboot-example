@@ -40,7 +40,7 @@ steps:
           --region ${_DEFAULT_REGION} \
           --platform managed \
           --to-revisions LATEST=${_TRAFFIC_PERCENTAGE}
-          #--vpc-connector ${_CONNECTOR_NAME} \
+          --vpc-connector ${_CONNECTOR_NAME} \
 
 # https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values
 substitutions:

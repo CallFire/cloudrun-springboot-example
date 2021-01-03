@@ -25,7 +25,7 @@ steps:
           --region ${_DEFAULT_REGION} \
           --platform managed \
           --allow-unauthenticated
-          #--vpc-connector ${_CONNECTOR_NAME} \
+          --vpc-connector ${_CONNECTOR_NAME} \
           # --image ${_DEFAULT_REGION}-docker.pkg.dev/${_SEED_PROJECT_ID}/container-repository/${REPO_NAME}:${TAG_NAME} \
 
 # https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values
