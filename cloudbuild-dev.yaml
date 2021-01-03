@@ -21,12 +21,13 @@ steps:
       - "-c"
       - |
         set -ex
-        gcloud beta run deploy ${REPO_NAME}-${BRANCH_NAME} \
+        gcloud run deploy ${REPO_NAME}-${BRANCH_NAME} \
           --image ${_DEFAULT_REGION}-docker.pkg.dev/${PROJECT_ID}/container-repository/${REPO_NAME}:dev-${SHORT_SHA} \
           --region ${_DEFAULT_REGION} \
           --platform managed \
           --allow-unauthenticated \
           --vpc-connector ${_CONNECTOR_NAME} \
+          #--vpc-egress # all|private-ranges-only(default)
           #--set-env-vars CONNECTION_TYPE=ip \
 
 # We already pushed the image in the first step as we need it to use it in the following deploy step
